@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>아무 말 대잔치 - 로그인</title>
+    <title>로그인 | 아무 말 대잔치</title>
     <link rel="stylesheet" href="styles/styles.css" />
 </head>
+
 <body class="login-page">
 <header>
     <h1>아무 말 대잔치</h1>
@@ -14,16 +15,20 @@
 <main class="login-section">
     <h2 class="login-title">로그인</h2>
 
-    <div class="login-box">
-        <label>이메일</label>
-        <input type="email" placeholder="이메일을 입력하세요" />
+    <form id="loginForm" class="login-box">
+        <label for="email">이메일</label>
+        <input id="email" name="email" type="email" placeholder="이메일을 입력하세요" required />
 
-        <label>비밀번호</label>
-        <input type="password" placeholder="비밀번호를 입력하세요" />
+        <label for="password">비밀번호</label>
+        <input id="password" name="password" type="password" placeholder="비밀번호를 입력하세요" required />
 
-        <button class="login-btn">로그인</button>
-        <button class="signup-btn" onclick="location.href='signup.html'">회원가입</button>
-    </div>
+        <button type="submit" id="loginBtn" class="login-btn">로그인</button>
+    </form>
+
+    <button class="signup-btn" onclick="location.href='signup.html'">회원가입</button>
 </main>
+
+<!-- ✅ 모듈 스크립트로 변경 -->
+<script type="module" src="scripts/login.js"></script>
 </body>
 </html>

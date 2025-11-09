@@ -7,7 +7,6 @@
     flex-direction: column;
 }
 
-/* 헤더 */
 header {
     width: 100%;
     height: 104px;
@@ -45,14 +44,12 @@ header h1 {
     background: #d1d5db;
 }
 
-/* 전체 영역 */
 .post-detail-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 32px;
 }
 
-/* 제목 + 작성자 */
 .post-header {
     display: flex;
     justify-content: space-between;
@@ -71,7 +68,6 @@ header h1 {
     gap: 8px;
 }
 
-/* 수정 / 삭제 버튼 */
 .post-actions {
     display: flex;
     gap: 8px;
@@ -92,7 +88,6 @@ header h1 {
     background: rgba(172, 160, 235, 0.15);
 }
 
-/* 본문 */
 .post-content {
     display: flex;
     flex-direction: column;
@@ -111,7 +106,6 @@ header h1 {
     margin-top: 12px;
 }
 
-/* 좋아요·조회·댓글 */
 .post-stats {
     display: flex;
     justify-content: center;
@@ -137,7 +131,6 @@ header h1 {
     color: #333;
 }
 
-/* 구분선 */
 .divider-line {
     width: 595px;
     height: 1px;
@@ -145,7 +138,6 @@ header h1 {
     margin: 0 auto 24px;
 }
 
-/* ✅ 댓글 전체 박스 */
 .comment-section {
     width: 595px;
     min-height: 205px;
@@ -161,30 +153,28 @@ header h1 {
     box-sizing: border-box;
 }
 
-/* ✅ 댓글 입력창 */
 .comment-box {
     width: 544px;
     height: 94px;
     background: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: flex-start; /* 상단 정렬 */
+    justify-content: flex-start;
     padding: 10px 12px;
     box-sizing: border-box;
 }
 .comment-box textarea {
     flex: 1;
-    border: none;          /* ✅ 테두리 제거 */
+    border: none;
     outline: none;
     resize: none;
     font-size: 15px;
-    text-align: left;      /* ✅ 왼쪽 정렬 */
+    text-align: left;
     padding: 4px;
     color: #111;
     font-family: "Noto Sans KR", sans-serif;
 }
 
-/* ✅ 댓글 등록 버튼 (바깥쪽 하단) */
 .comment-submit-btn {
     width: 138px;
     height: 39px;
@@ -203,7 +193,6 @@ header h1 {
     opacity: 0.9;
 }
 
-/* 댓글 목록 */
 .comment-list {
     display: flex;
     flex-direction: column;

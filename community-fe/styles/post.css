@@ -7,41 +7,85 @@
     flex-direction: column;
 }
 
-/* 헤더 */
 header {
     width: 100%;
     height: 104px;
     border-bottom: 1px solid rgba(0, 0, 0, 1);
-    background: rgba(244, 245, 247, 1);
+    background: var(--bg);
     display: flex;
     justify-content: center;
     align-items: center;
     position: relative;
 }
+
 header h1 {
     font-family: "Sandoll GogoRound", sans-serif;
     font-weight: 400;
     font-size: 32px;
+    margin: 0;
 }
-/* 프로필 아이콘 */
-.profile-icon {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #d1d5db;
+
+.profile-container {
     position: absolute;
     right: 60px;
     top: 32px;
 }
 
-/* 메인 컨테이너 */
+.profile-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #d1d5db;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.profile-icon:hover {
+    background: #e9e9e9;
+}
+
+.profile-dropdown {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    list-style: none;
+    padding: 8px 0;
+    width: 160px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+.profile-dropdown li {
+    padding: 10px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+
+.profile-dropdown li:hover {
+    background: #e9e9e9;
+}
+
+.profile-dropdown a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
+
+
 .post-container {
     max-width: 800px;
     margin: 0 auto;
     padding: 24px;
 }
 
-/* 인사 섹션 */
 .greeting {
     text-align: center;
     margin-top: 40px;
@@ -49,7 +93,6 @@ header h1 {
     position: relative;
 }
 
-/* 인사 문구 */
 .greeting-title {
     font-family: "Pretendard", sans-serif;
     font-weight: 400;
@@ -62,15 +105,13 @@ header h1 {
     font-weight: 700;
 }
 
-/* ✅ 버튼을 게시글 박스 오른쪽 끝에 정렬 */
 .button-right {
-    width: 592px; /* 게시글 카드와 동일 너비 */
-    margin: 10px auto 0 auto; /* 가운데 정렬 후 내부에서 오른쪽 끝 정렬 */
+    width: 592px;
+    margin: 10px auto 0 auto;
     display: flex;
     justify-content: flex-end;
 }
 
-/* 게시글 작성 버튼 */
 .create-post-btn {
     width: 147px;
     height: 47px;
@@ -87,7 +128,6 @@ header h1 {
     opacity: 0.9;
 }
 
-/* 게시글 목록 */
 .post-list {
     display: flex;
     flex-direction: column;
@@ -98,14 +138,18 @@ header h1 {
 
 .post-card {
     width: 592px;
-    height: 169px;
     background: #fff;
     border-radius: 12px;
-    box-shadow: 3px 4px 4px 0px rgba(204, 204, 204, 0.25);
+    box-shadow: 3px 4px 4px rgba(204, 204, 204, 0.25);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     padding: 16px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+.post-card:hover {
+    transform: scale(1.01);
 }
 
 .post-header {
@@ -116,6 +160,7 @@ header h1 {
 .post-header h3 {
     font-size: 18px;
     font-weight: 700;
+    margin: 0;
 }
 .post-date {
     font-size: 13px;
