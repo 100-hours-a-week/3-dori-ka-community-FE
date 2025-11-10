@@ -1,7 +1,7 @@
 import { apiFetch } from "./api.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("#signupForm");
+    const signupForm = document.querySelector("#signupForm");
     const emailInput = document.querySelector("#email");
     const passwordInput = document.querySelector("#password");
     const passwordCheckInput = document.querySelector("#passwordCheck");
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.disabled = !allValid;
     }
 
-    form.addEventListener("submit", async (e) => {
+    signupForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         validateAll();
 

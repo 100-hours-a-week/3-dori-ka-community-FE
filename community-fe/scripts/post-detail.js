@@ -34,8 +34,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function loadPostDetail() {
         try {
-            const res = await apiFetch(`/posts/${postId}`, { method: "GET" });
-            const post = res.data;
+            const response = await apiFetch(`/posts/${postId}`, { method: "GET" });
+            const post = response.data;
 
             titleEl.textContent = post.title;
             authorEl.textContent = post.nickname ?? post.writer ?? "작성자";
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 commentEl.className = "comment-item";
                 commentEl.innerHTML = `
           <div class="comment-header">
-            <span class="comment-author">${c.writer ?? c.nickname ?? "익명"}</span>
+            <span class="comment-author">${c.writer ?? "익명"}</span>
             <span class="comment-date">${new Date(c.createdDate).toLocaleString()}</span>
           </div>
           <p class="comment-text">${c.content}</p>

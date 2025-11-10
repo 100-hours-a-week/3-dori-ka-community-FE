@@ -15,22 +15,22 @@ document.addEventListener("DOMContentLoaded", async () => {
     let page = 0;
 
     function createPostCard(post) {
-        const dateText = post.createdDate ?? "";
-        const nickname = post.writer ?? "작성자";
+        const createdDate = post.createdDate ?? "";
+        const writer = post.writer ?? "작성자";
 
         const card = document.createElement("div");
         card.className = "post-card";
         card.innerHTML = `
       <div class="post-header">
         <h3>${post.title}</h3>
-        <span class="post-date">${dateText}</span>
+        <span class="post-date">${createdDate}</span>
       </div>
       <div class="post-meta">
         좋아요 ${post.likeCount ?? 0} · 댓글 ${post.commentCount ?? 0} · 조회수 ${post.viewCount ?? 0}
       </div>
       <div class="post-author">
         <div class="author-profile"></div>
-        <span>${nickname}</span>
+        <span>${writer}</span>
       </div>
     `;
 
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         postList.appendChild(card);
     }
 
-    function appendEndMessage(text) {
+    function appendessage(text) {
         const p = document.createElement("p");
         p.textContent = text;
         p.style.margin = "30px 0";
@@ -53,21 +53,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     async function loadAllPosts() {
         while (true) {
             try {
-                const res = await apiFetch(`/posts?page=${page}&size=${pageSize}`);
-                const data = res.data;
+                const response = await apiFetch(`/posts?page=${page}&size=${pageSize}`);
+                const data = response.data;
                 const posts = data?.content ?? [];
 
                 if (posts.length === 0 && page === 0) {
-                    appendEndMessage("등록된 게시글이 없습니다.");
+                    appendMessage("등록된 게시글이 없습니다.");
                     break;
                 }
 
                 posts.forEach(createPostCard);
 
-                if (data.last) {
-                    appendEndMessage("마지막 게시글입니다.");
-                    break;
-                }
 
                 page += 1;
             } catch (err) {
@@ -78,6 +74,5 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    // 첫 로드에 전부 가져오기
     await loadAllPosts();
 });

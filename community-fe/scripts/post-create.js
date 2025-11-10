@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const form = document.getElementById("create-form");
-    const titleInput = document.getElementById("title");
-    const contentInput = document.getElementById("content");
-    const imageInput = document.getElementById("image");
+    const createForm = document.querySelector("#create-form");
+    const titleInput = document.querySelector("#title");
+    const contentInput = document.querySelector("#content");
+    const imageInput = document.querySelector("#image");
     const filePlaceholder = document.querySelector(".file-placeholder");
 
     imageInput.addEventListener("change", () => {
@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         filePlaceholder.textContent = fileName;
     });
 
-    form.addEventListener("submit", async (e) => {
+    createForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const title = titleInput.value.trim();
@@ -33,18 +33,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
         try {
             const body = { title, content };
-            const res = await apiFetch("/posts", {
+            const response = await apiFetch("/posts", {
                 method: "POST",
-                body: JSON.stringify(body),
+                body: JSON.stringify(body)
             });
 
-            if (!res || !res.data) throw new Error("서버 응답 오류");
+            if (!response || !response.data) throw new Error("서버 응답 오류");
 
             alert("게시글이 성공적으로 작성되었습니다.");
-            const postId = res.data.postId;
+            const postId = response.data.postId;
             location.href = `post-detail.html?id=${postId}`;
-        } catch (err) {
-            console.error("게시글 작성 실패:", err);
+        } catch (error) {
+            console.error("게시글 작성 실패:", error);
             alert("게시글 작성 중 오류가 발생했습니다.");
         }
     });
