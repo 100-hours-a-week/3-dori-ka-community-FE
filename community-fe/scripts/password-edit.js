@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const form = document.getElementById("passwordForm");
-    const passwordInput = document.getElementById("password");
-    const passwordCheckInput = document.getElementById("passwordCheck");
+    const form = document.querySelector("#passwordForm");
+    const passwordInput = document.querySelector("#password");
+    const passwordCheckInput = document.querySelector("#passwordCheck");
 
     form.addEventListener("submit", async (e) => {
         e.preventDefault();

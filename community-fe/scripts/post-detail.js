@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             dateEl.textContent = new Date(post.createdDate).toLocaleString();
             contentEl.textContent = post.content;
             likeCountEl.textContent = post.likeCount ?? 0;
-            commentCountEl.textContent = post.commentCount ?? 0;
+            // commentCountEl.textContent = post.commentCount ?? 0;
 
             await loadViewCount();
             await loadComments();
@@ -65,8 +65,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function loadComments() {
         try {
-            const res = await apiFetch(`/posts/${postId}/comments`, { method: "GET" });
-            const comments = res.data?.content ?? [];
+            const response = await apiFetch(`/posts/${postId}/comments`, { method: "GET" });
+            const comments = response.data?.content ?? [];
+            commentCountEl.textContent = response.data.totalElements;
 
             commentListEl.innerHTML = "";
 

@@ -19,10 +19,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    const form = document.getElementById("update-form");
-    const titleInput = document.getElementById("title");
-    const contentInput = document.getElementById("content");
-    const imageInput = document.getElementById("image");
+    const updateForm = document.querySelector("#updateForm");
+    const titleInput = document.querySelector("#title");
+    const contentInput = document.querySelector("#content");
+    const imageInput = document.querySelector("#image");
     const filePlaceholder = document.querySelector(".file-placeholder");
 
     imageInput.addEventListener("change", () => {
@@ -32,8 +32,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function loadPost() {
         try {
-            const res = await apiFetch(`/posts/${postId}`, { method: "GET" });
-            const post = res.data;
+            const response = await apiFetch(`/posts/${postId}`, { method: "GET" });
+            const post = response.data;
 
             titleInput.value = post.title;
             contentInput.value = post.content;
@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     }
 
-    form.addEventListener("submit", async (e) => {
+    updateForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const title = titleInput.value.trim();

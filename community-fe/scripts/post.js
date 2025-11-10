@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const postList = document.querySelector(".post-list");
     const pageSize = 20;
     let page = 0;
+    let lastPage = false;
 
     function createPostCard(post) {
         const createdDate = post.createdDate ?? "";
@@ -51,7 +52,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function loadAllPosts() {
-        while (true) {
+        while (!lastPage) {
             try {
                 const response = await apiFetch(`/posts?page=${page}&size=${pageSize}`);
                 const data = response.data;
@@ -64,6 +65,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 posts.forEach(createPostCard);
 
+                if (data.last) {
+                    lastPage = true;
+                    break;
+                }
 
                 page += 1;
             } catch (err) {
