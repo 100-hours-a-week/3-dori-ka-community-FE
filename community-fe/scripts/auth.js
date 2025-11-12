@@ -28,21 +28,31 @@ export async function verifyToken() {
     }
 }
 
-export function logout() {
-    localStorage.removeItem("token");
-    localStorage.removeItem("email");
-    alert("로그아웃 되었습니다.");
-    location.href = "index.html";
-}
-
-export function checkAuth() {
+export async function logout() {
     const token = localStorage.getItem("token");
 
-    if (!token || isTokenExpired(token)) {
-        alert("로그인이 필요합니다.");
-        localStorage.removeItem("token");
-        location.href = "index.html";
-        return false;
+    if (!token) {
+        alert("로그인 상태가 아닙니다.");
+        return;
     }
-    return true;
+
+    try {
+        await apiFetch("/auth/logout", {
+            method: "POST",
+            credentials: "include",
+        });
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("email");
+
+        alert("로그아웃 되었습니다.");
+        location.href = "index.html";
+    } catch (error) {
+        console.warn("로그아웃 요청 중 오류:", error);
+        localStorage.removeItem("token");
+        localStorage.removeItem("email");
+
+        alert("세션이 만료되어 로그아웃되었습니다.");
+        location.href = "index.html";
+    }
 }

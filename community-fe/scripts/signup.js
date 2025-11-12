@@ -1,4 +1,6 @@
 import { apiFetch } from "./api.js";
+import "./common-header.js";
+
 
 document.addEventListener("DOMContentLoaded", () => {
     const signupForm = document.querySelector("#signupForm");

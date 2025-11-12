@@ -1,0 +1,153 @@
+.mypage .layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    align-items: start;
+    max-width: 1100px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.mypage .sidebar {
+    position: sticky;
+    top: 84px;
+    align-self: start;
+}
+
+.profile-card {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    text-align: center;
+}
+
+.profile-card .avatar {
+    border-radius: 50%;
+    border: 2px solid var(--border-black);
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+}
+
+.profile-card .name {
+    margin: 6px 0 0;
+    font-size: 18px;
+    font-weight: 800;
+}
+
+.profile-card .email {
+    margin: 0 0 8px;
+    font-size: 14px;
+    color: var(--gray);
+}
+
+.profile-card .actions-col {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+}
+
+.mypage .btn {
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.mypage .btn-light {
+    border: 1px solid var(--border-black);
+    background: #fff;
+    color: var(--text);
+}
+
+.mypage .btn-light:hover {
+    background: var(--primary);
+    color: #fff;
+}
+
+.mypage .btn-accent {
+    border: none;
+    background: var(--primary);
+    color: #fff;
+}
+
+.mypage .btn-accent:hover {
+    opacity: 0.9;
+}
+
+.mypage .content .section + .section {
+    margin-top: 20px;
+}
+
+.mypage .list {
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.mypage .list .item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+}
+
+.mypage .list .item:first-child {
+    border-top: 0;
+}
+
+.mypage .list .item .title {
+    margin: 0;
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--text);
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mypage .list .item .title a:hover {
+    text-decoration: underline;
+}
+
+.mypage .list .item .meta {
+    color: var(--gray);
+    font-size: 13px;
+    min-width: 220px;
+    text-align: right;
+    display: inline-flex;
+    gap: 8px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+}
+
+.mypage .list.--compact .item {
+    padding: 10px 12px;
+}
+
+.mypage .list.--compact .item .title {
+    font-size: 14px;
+}
+
+@media (max-width: 880px) {
+    .mypage .layout {
+        grid-template-columns: 1fr;
+    }
+
+    .mypage .sidebar {
+        position: static;
+    }
+
+    .mypage .list .item .meta {
+        min-width: auto;
+        text-align: left;
+        justify-content: flex-start;
+    }
+}

@@ -1,44 +1,3 @@
-.signup-page {
-    background: rgba(244, 245, 247, 1);
-    color: #111827;
-    font-family: "Noto Sans KR", sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-
-header {
-    background: #fff;
-    border-bottom: 1px solid rgba(0, 0, 0, 1);
-    padding: 16px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-header h1 {
-    font-family: "Sandoll GogoRound", sans-serif;
-    font-size: 32px;
-    font-weight: 400;
-    margin: 0;
-}
-
-.back-btn {
-    position: absolute;
-    left: 24px;
-    background: none;
-    border: none;
-    font-size: 24px;
-    cursor: pointer;
-    color: #000;
-}
-
-.back-btn:hover {
-    color: #7f6aee;
-}
-
 .signup-section {
     display: flex;
     flex-direction: column;
@@ -52,6 +11,7 @@ header h1 {
     font-size: 32px;
     margin-bottom: 32px;
 }
+
 
 .signup-box {
     width: 392px;
@@ -103,7 +63,7 @@ header h1 {
 }
 
 .helper-text.error {
-    color: rgba(255, 0, 0, 1);
+    color: rgb(255, 0, 0);
 }
 
 .signup-box input {
@@ -126,23 +86,27 @@ header h1 {
 .signup-submit {
     width: 360px;
     height: 40px;
-    background: #aca0eb;
+    background: var(--primary);
     border: none;
     border-radius: 8px;
     color: #fff;
     font-weight: 600;
     cursor: not-allowed;
-    transition: 0.3s;
+    transition: background 0.3s, opacity 0.2s;
 }
 
 .signup-submit.active {
-    background: #7f6aee;
+    background: #222;
     cursor: pointer;
+}
+
+.signup-submit.active:hover {
+    opacity: 0.9;
 }
 
 .go-login {
     background: transparent;
-    color: black;
+    color: var(--text);
     border: none;
     cursor: pointer;
     font-weight: 500;

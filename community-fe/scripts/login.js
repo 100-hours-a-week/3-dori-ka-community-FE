@@ -1,5 +1,7 @@
 import { apiFetch } from "./api.js";
 import { verifyToken } from "./auth.js";
+import "./common-header.js";
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     const validToken = await verifyToken();
