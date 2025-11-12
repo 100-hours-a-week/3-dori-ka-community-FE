@@ -24,14 +24,19 @@ document.addEventListener("DOMContentLoaded", async () => {
         card.innerHTML = `
       <div class="post-header">
         <h3>${post.title}</h3>
+        <div class="post-author-top">
+          <div class="author-profile"></div>
+          <span>${writer}</span>
+        </div>
+      </div>
+
+      <div class="post-footer">
+        <div class="post-meta">
+          <i class="bi bi-heart"></i> ${post.likeCount ?? 0} &nbsp;&nbsp;
+          <i class="bi bi-chat-left-dots"></i> ${post.commentCount ?? 0} &nbsp;&nbsp;
+          <i class="bi bi-eye"></i> ${post.viewCount ?? 0}
+        </div>
         <span class="post-date">${createdDate}</span>
-      </div>
-      <div class="post-meta">
-        좋아요 ${post.likeCount ?? 0} · 댓글 ${post.commentCount ?? 0} · 조회수 ${post.viewCount ?? 0}
-      </div>
-      <div class="post-author">
-        <div class="author-profile"></div>
-        <span>${writer}</span>
       </div>
     `;
 
@@ -42,7 +47,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         postList.appendChild(card);
     }
 
-    function appendessage(text) {
+    function appendMessage(text) {
         const p = document.createElement("p");
         p.textContent = text;
         p.style.margin = "30px 0";

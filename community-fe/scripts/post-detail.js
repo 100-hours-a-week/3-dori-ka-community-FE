@@ -40,16 +40,12 @@ document.addEventListener("DOMContentLoaded", async () => {
             const post = response.data;
 
             titleEl.textContent = post.title;
-            authorEl.textContent = post.nickname ?? post.writer ?? "작성자";
+            authorEl.textContent = post.writer ?? "작성자";
             dateEl.textContent = new Date(post.createdDate).toLocaleString();
             contentEl.textContent = post.content;
             likeCountEl.textContent = post.likeCount ?? 0;
 
-            const isOwner =
-                post.writerEmail === currentUserEmail ||
-                post.email === currentUserEmail ||
-                post.userEmail === currentUserEmail;
-
+            const isOwner = post.writerEmail === currentUserEmail;
             if (!isOwner) {
                 editBtn.style.display = "none";
                 deleteBtn.style.display = "none";
@@ -72,42 +68,60 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     async function loadComments() {
-        try {
-            const res = await apiFetch(`/posts/${postId}/comments?page=0&size=100`, { method: "GET" });
-            const comments = res.data?.content ?? [];
-            commentCountEl.textContent = res.data.totalElements;
-            commentListEl.innerHTML = "";
+        let page = 0;
+        let lastPage = false;
+        let allComments = [];
+        commentListEl.innerHTML = "";
 
-            if (comments.length === 0) {
+        try {
+            while (!lastPage) {
+                const res = await apiFetch(`/posts/${postId}/comments?page=${page}&size=10`, {
+                    method: "GET",
+                });
+
+                const data = res.data;
+                const comments = data?.content ?? [];
+                allComments = allComments.concat(comments);
+
+                if (data.last) {
+                    lastPage = true;
+                    break;
+                }
+                page += 1;
+            }
+
+            commentCountEl.textContent = allComments.length;
+
+            if (allComments.length === 0) {
                 commentListEl.innerHTML = `<p style="color:#777;text-align:center;margin-top:10px;">등록된 댓글이 없습니다.</p>`;
                 return;
             }
 
-            comments.forEach((c) => {
+            allComments.forEach((c) => {
                 const isCommentOwner = c.writerEmail === currentUserEmail;
                 const commentEl = document.createElement("div");
                 commentEl.className = "comment-item";
                 commentEl.innerHTML = `
-          <div class="comment-top">
-            <div>
-              <strong class="comment-author">${c.writer ?? "익명"}</strong>
-              <span class="comment-date">${new Date(c.createdDate).toLocaleString()}</span>
-            </div>
-            ${
+                    <div class="comment-top">
+                        <div>
+                            <strong class="comment-author">${c.writer ?? "익명"}</strong>
+                            <span class="comment-date">${new Date(c.createdDate).toLocaleString()}</span>
+                        </div>
+                        ${
                     isCommentOwner
                         ? `<div class="comment-actions">
-                     <button class="comment-edit-btn" data-id="${c.commentId}">수정</button>
-                     <button class="comment-delete-btn" data-id="${c.commentId}">삭제</button>
-                   </div>`
+                                       <button class="comment-edit-btn" data-id="${c.commentId}">수정</button>
+                                       <button class="comment-delete-btn" data-id="${c.commentId}">삭제</button>
+                                   </div>`
                         : ""
                 }
-          </div>
-          <p class="comment-text">${c.content}</p>
-        `;
+                    </div>
+                    <p class="comment-text">${c.content}</p>
+                `;
                 commentListEl.appendChild(commentEl);
             });
-        } catch {
-            console.error("댓글 불러오기 실패");
+        } catch (err) {
+            console.error("댓글 불러오기 실패:", err);
         }
     }
 
