@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         try {
             const response = await apiFetch("/auth", {
                 method: "POST",
+                credentials: "include",
                 body: JSON.stringify({ email, password }),
             });
 

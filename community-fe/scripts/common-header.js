@@ -3,7 +3,7 @@ import { logout } from "./auth.js";
 document.addEventListener("DOMContentLoaded", () => {
     const headerHTML = `
     <header>
-      <a href="index.html" class="logo">Dori's Community</a>
+      <a href="post.html" class="logo">Dori's Community</a>
       <nav class="header-menu">
         <a href="post.html">게시글 목록</a>
         <a href="mypage.html">마이페이지</a>

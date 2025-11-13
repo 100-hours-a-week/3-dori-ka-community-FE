@@ -213,3 +213,10 @@
     border-color: var(--primary);
     transform: translateY(-1px);
 }
+
+#post-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    line-height: 1.5;
+}

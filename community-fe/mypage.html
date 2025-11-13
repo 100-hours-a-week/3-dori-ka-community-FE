@@ -8,69 +8,43 @@
 </head>
 
 <body class="mypage">
-<main class="container mypage-container">
-    <div class="layout">
-        <aside class="sidebar">
-            <section class="card profile-card">
-                <img class="avatar" src="https://placehold.co/120x120" alt="프로필 이미지" />
-                <h2 class="name" id="mp-name">사용자 이름</h2>
-                <p class="email" id="mp-email">user@example.com</p>
-                <div class="actions-col">
-                    <a href="profile-edit.html" class="btn btn-light">회원정보 수정</a>
-                    <a href="password-edit.html" class="btn btn-light">비밀번호 변경</a>
-                    <button id="logoutBtn" class="btn btn-accent">로그아웃</button>
-                </div>
-            </section>
+<main class="mp-container">
+    <div class="mp-layout">
+
+        <aside class="mp-profile-card">
+            <img src="https://placehold.co/120x120" alt="프로필 이미지" class="mp-avatar" />
+            <h2 class="mp-name"></h2>
+            <p class="mp-email"></p>
+            <p class="mp-joined"></p>
+
+            <div class="mp-actions-col">
+                <button class="btn btn-light" onclick="location.href='profile-edit.html'">
+                    회원정보 수정
+                </button>
+                <button class="btn btn-light" onclick="location.href='password-edit.html'">
+                    비밀번호 변경
+                </button>
+                <button id="delete-account-btn" class="btn btn-accent" type="button">
+                    회원 탈퇴
+                </button>
+            </div>
         </aside>
 
-        <section class="content">
-            <div class="section">
-                <div class="page-head">
-                    <h3 class="h4">내가 쓴 게시글</h3>
-                </div>
-                <div id="my-posts" class="list">
-                    <div class="item">
-                        <h4 class="title">
-                            <a class="title-link" href="post-detail.html?id=1">예시) 첫 번째 게시글 제목</a>
-                        </h4>
-                        <div class="meta">
-                            <span>2025-11-10</span><span>조회 12</span><span>댓글 3</span>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <h4 class="title">
-                            <a class="title-link" href="post-detail.html?id=2">예시) 두 번째 게시글 제목</a>
-                        </h4>
-                        <div class="meta">
-                            <span>2025-11-09</span><span>조회 7</span><span>댓글 1</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+=        <section class="mp-card mp-post-section">
+            <h3 class="mp-section-title">내가 쓴 게시글</h3>
+            <ul class="mp-post-list"></ul>
+            <div class="mp-pagination mp-post-pagination"></div>
+        </section>
 
-            <div class="section">
-                <div class="page-head">
-                    <h3 class="h4">내 댓글</h3>
-                </div>
-                <div id="my-comments" class="list --compact">
-                    <div class="item">
-                        <p class="title">예시) “댓글 내용 미리보기…”</p>
-                        <div class="meta">
-                            <span>원문: <a href="post-detail.html?id=1">첫 번째 게시글 제목</a></span><span>2025-11-10</span>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <p class="title">예시) “또 다른 댓글 미리보기…”</p>
-                        <div class="meta">
-                            <span>원문: <a href="post-detail.html?id=2">두 번째 게시글 제목</a></span><span>2025-11-09</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <section class="mp-card mp-comment-section">
+            <h3 class="mp-section-title">내가 쓴 댓글</h3>
+            <ul class="mp-comment-list"></ul>
+            <div class="mp-pagination mp-comment-pagination"></div>
         </section>
     </div>
 </main>
 
 <script type="module" src="scripts/common-header.js"></script>
+<script type="module" src="scripts/mypage.js"></script>
 </body>
 </html>

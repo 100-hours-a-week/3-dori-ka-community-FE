@@ -15,9 +15,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     let page = 0;
     let lastPage = false;
 
+    function truncateText(text, maxLength) {
+        if (!text) return "";
+        return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
+    }
+
     function createPostCard(post) {
         const createdDate = post.createdDate ?? "";
         const writer = post.writer ?? "작성자";
+        const preview = truncateText(post.content, 20);
 
         const card = document.createElement("div");
         card.className = "post-card";
@@ -29,6 +35,8 @@ document.addEventListener("DOMContentLoaded", async () => {
           <span>${writer}</span>
         </div>
       </div>
+
+      <p class="post-preview">${preview}</p>
 
       <div class="post-footer">
         <div class="post-meta">

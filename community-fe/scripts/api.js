@@ -13,6 +13,7 @@ export async function apiFetch(endpoint, options = {}) {
     try {
         const response = await fetch(`${BASE_URL}${endpoint}`, {
             ...options,
+            credentials: "include",
             headers,
         });
 

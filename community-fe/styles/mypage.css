@@ -1,153 +1,214 @@
-.mypage .layout {
+.mypage .mp-container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 40px auto 80px;
+    padding: 0 40px;
+}
+
+.mypage .mp-layout {
     display: grid;
     grid-template-columns: 280px 1fr;
-    gap: 20px;
+    grid-template-areas:
+        "profile posts"
+        "profile comments";
+    gap: 40px;
+    width: 100%;
     align-items: start;
-    max-width: 1100px;
-    margin: 24px auto;
-    padding: 0 16px;
 }
 
-.mypage .sidebar {
-    position: sticky;
-    top: 84px;
-    align-self: start;
-}
+.mypage .mp-profile-card {
+    grid-area: profile;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
 
-.profile-card {
-    display: grid;
-    justify-items: center;
-    gap: 10px;
+    width: 100%;
+    max-width: 280px;
     text-align: center;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-self: stretch;
 }
 
-.profile-card .avatar {
+.mypage .mp-avatar {
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     border: 2px solid var(--border-black);
-    width: 120px;
-    height: 120px;
     object-fit: cover;
+    margin-bottom: 16px;
 }
 
-.profile-card .name {
-    margin: 6px 0 0;
-    font-size: 18px;
-    font-weight: 800;
+.mypage .mp-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
 }
 
-.profile-card .email {
-    margin: 0 0 8px;
-    font-size: 14px;
+.mypage .mp-email,
+.mypage .mp-joined {
+    font-size: 15px;
     color: var(--gray);
+    margin-bottom: 8px;
 }
 
-.profile-card .actions-col {
-    display: grid;
-    gap: 8px;
+.mypage .mp-actions-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: auto;
     width: 100%;
 }
 
-.mypage .btn {
-    display: block;
-    padding: 8px 12px;
-    border-radius: 6px;
-    text-align: center;
+.mypage .mp-actions-col .btn {
+    width: 100%;
+    height: 44px;
+    font-size: 15px;
     font-weight: 600;
+    border-radius: 10px;
     cursor: pointer;
-    transition: all 0.2s ease;
-}
 
-.mypage .btn-light {
-    border: 1px solid var(--border-black);
-    background: #fff;
-    color: var(--text);
-}
-
-.mypage .btn-light:hover {
-    background: var(--primary);
-    color: #fff;
-}
-
-.mypage .btn-accent {
     border: none;
-    background: var(--primary);
-    color: #fff;
-}
-
-.mypage .btn-accent:hover {
-    opacity: 0.9;
-}
-
-.mypage .content .section + .section {
-    margin-top: 20px;
-}
-
-.mypage .list {
-    border: 1px solid var(--border);
-    background: var(--card);
-    border-radius: 12px;
-    overflow: hidden;
-}
-
-.mypage .list .item {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    padding: 14px 16px;
-    border-top: 1px solid var(--border);
+    justify-content: center;
+
+    transition: all 0.15s ease;
 }
 
-.mypage .list .item:first-child {
-    border-top: 0;
-}
-
-.mypage .list .item .title {
-    margin: 0;
-    font-weight: 700;
-    font-size: 16px;
+.mypage .mp-actions-col .btn-light {
+    background: #fff;
+    border: 1px solid black;
     color: var(--text);
-    max-width: 70%;
+}
+
+.mypage .mp-actions-col .btn-light:hover {
+    background: black;
+    color: #fff;
+}
+
+.mypage .mp-actions-col .btn-accent {
+    background: black;
+    color: #fff;
+    border: 1px solid black;
+}
+
+.mypage .mp-actions-col .btn-accent:hover {
+    background: #fff;
+    color: black;
+}
+
+.mypage .mp-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 40px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    width: 100%;
+}
+
+.mypage .mp-post-section { grid-area: posts; }
+.mypage .mp-comment-section { grid-area: comments; }
+
+.mypage .mp-section-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.mypage .mp-post-list,
+.mypage .mp-comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mypage .mp-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+}
+
+.mypage .mp-item:last-child {
+    border-bottom: none;
+}
+
+.mypage .mp-title,
+.mypage .mp-id {
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
 }
 
-.mypage .list .item .title a:hover {
-    text-decoration: underline;
-}
-
-.mypage .list .item .meta {
-    color: var(--gray);
-    font-size: 13px;
-    min-width: 220px;
-    text-align: right;
-    display: inline-flex;
-    gap: 8px;
-    justify-content: flex-end;
-    flex-wrap: wrap;
-}
-
-.mypage .list.--compact .item {
-    padding: 10px 12px;
-}
-
-.mypage .list.--compact .item .title {
+.mypage .mp-meta {
+    display: flex;
+    gap: 14px;
     font-size: 14px;
+    color: var(--gray);
 }
 
-@media (max-width: 880px) {
-    .mypage .layout {
+.mypage .mp-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mypage .mp-clickable:hover {
+    background: #f3f4f6;
+}
+
+.mypage .mp-pagination {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.mypage .mp-page,
+.mypage .mp-page-nav {
+    width: 38px;
+    height: 38px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background: var(--bg);
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.mypage .mp-page:hover,
+.mypage .mp-page-nav:hover:not(:disabled) {
+    background: var(--primary);
+    color: #fff;
+}
+
+.mypage .mp-page.is-active {
+    background: var(--primary);
+    color: #fff;
+}
+
+.mypage .mp-page-nav:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+
+@media (max-width: 960px) {
+    .mypage .mp-layout {
         grid-template-columns: 1fr;
-    }
-
-    .mypage .sidebar {
-        position: static;
-    }
-
-    .mypage .list .item .meta {
-        min-width: auto;
-        text-align: left;
-        justify-content: flex-start;
+        grid-template-areas:
+          "profile"
+          "posts"
+          "comments";
     }
 }

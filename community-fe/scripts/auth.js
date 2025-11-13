@@ -1,5 +1,8 @@
 import { apiFetch } from "./api.js";
 
+export function refresh(token) {
+
+}
 export function isTokenExpired(token) {
     try {
         const payload = JSON.parse(atob(token.split(".")[1]));
