@@ -10,9 +10,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    loadMyProfiles();
-    loadMyPosts(0);
-    loadMyComments(0);
+    await Promise.all([loadMyProfiles(), loadMyPosts(0), loadMyComments(0)])
+    // loadMyProfiles();
+    // loadMyPosts(0);
+    // loadMyComments(0);
 
     const deleteBtn = document.querySelector("#delete-account-btn")
     if (!deleteBtn) return;

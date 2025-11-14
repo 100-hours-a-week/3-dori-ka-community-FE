@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             titleInput.value = post.title;
             contentInput.value = post.content;
-        } catch (err) {
-            console.error("게시글 불러오기 실패:", err);
+        } catch (error) {
+            console.error("게시글 불러오기 실패:", error);
             alert("게시글 정보를 불러오지 못했습니다.");
             location.href = "post.html";
         }

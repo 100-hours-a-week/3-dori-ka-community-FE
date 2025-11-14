@@ -2,40 +2,62 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원정보 수정 | 아무 말 대잔치</title>
     <link rel="stylesheet" href="styles/styles.css" />
 </head>
-<body class="profile-edit-page">
-<main class="profile-edit-container">
-    <section class="profile-card">
-        <h2 class="profile-title">회원정보 수정</h2>
 
-        <form class="profile-form">
-            <div class="avatar-field">
-                <label class="field-label">프로필 이미지</label>
-                <div class="avatar-wrap">
-                    <div class="avatar-preview" aria-label="프로필 이미지 미리보기">
-                        <span class="avatar-initial">U</span>
-                    </div>
-                    <label class="avatar-button" for="avatarInput">이미지 선택</label>
-                    <input id="avatarInput" type="file" accept="image/*" />
-                    <p class="helper-text">JPG/PNG, 5MB 이하 권장</p>
+<body class="profile-edit-page">
+
+<div id="app-header"></div>
+
+<main class="profile-edit-wrapper">
+
+    <div class="profile-edit-card">
+
+        <h2 class="edit-title">회원정보 수정</h2>
+
+        <form id="editForm" class="edit-form">
+
+            <div class="edit-avatar-row">
+                <div class="edit-avatar-preview">
+                    <span class="avatar-initial">U</span>
+                    <img id="avatarPreviewImg" alt="프로필 이미지" style="display:none;" />
                 </div>
             </div>
 
-            <div class="field">
-                <label for="nickname" class="field-label">닉네임</label>
-                <input id="nickname" type="text" placeholder="새 닉네임을 입력하세요" />
+            <div class="edit-readonly-box">
+                <div class="readonly-row">
+                    <span class="ro-label">이메일</span>
+                    <span class="ro-value" id="roEmail"></span>
+                </div>
+                <div class="readonly-row">
+                    <span class="ro-label">가입일</span>
+                    <span class="ro-value" id="roCreatedDate"></span>
+                </div>
             </div>
 
-            <div class="form-actions">
-                <button type="button" class="btn-secondary" onclick="history.back()">취소</button>
-                <button type="submit" class="btn-primary">저장</button>
+            <div class="edit-field">
+                <label for="nickname">닉네임</label>
+                <input
+                        id="nickname"
+                        type="text"
+                        placeholder="새 닉네임을 입력해주세요"
+                        maxlength="20"
+                />
             </div>
+
+            <div class="edit-actions">
+                <button type="button" class="btn-cancel" onclick="history.back()">취소</button>
+                <button type="submit" class="btn-save">저장</button>
+            </div>
+
         </form>
-    </section>
+
+    </div>
+
 </main>
+
 <script type="module" src="scripts/profile-edit.js"></script>
 </body>
 </html>

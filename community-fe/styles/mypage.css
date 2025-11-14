@@ -1,7 +1,7 @@
 .mypage .mp-container {
     width: 100%;
     max-width: 1600px;
-    margin: 40px auto 80px;
+    margin: 120px auto 80px;
     padding: 0 40px;
 }
 
@@ -56,11 +56,11 @@
     margin-bottom: 8px;
 }
 
+
 .mypage .mp-actions-col {
     display: flex;
     flex-direction: column;
     gap: 10px;
-
     margin-top: auto;
     width: 100%;
 }
@@ -86,7 +86,6 @@
     border: 1px solid black;
     color: var(--text);
 }
-
 .mypage .mp-actions-col .btn-light:hover {
     background: black;
     color: #fff;
@@ -97,7 +96,6 @@
     color: #fff;
     border: 1px solid black;
 }
-
 .mypage .mp-actions-col .btn-accent:hover {
     background: #fff;
     color: black;
@@ -121,11 +119,19 @@
     margin-bottom: 20px;
 }
 
+.mypage .mp-post-section,
+.mypage .mp-comment-section {
+    min-height: 350px;
+}
+
 .mypage .mp-post-list,
 .mypage .mp-comment-list {
     display: flex;
     flex-direction: column;
     gap: 14px;
+
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 .mypage .mp-item {
@@ -158,6 +164,7 @@
     color: var(--gray);
 }
 
+/* 댓글 한줄 처리 */
 .mypage .mp-content {
     white-space: nowrap;
     overflow: hidden;
@@ -167,6 +174,7 @@
 .mypage .mp-clickable:hover {
     background: #f3f4f6;
 }
+
 
 .mypage .mp-pagination {
     margin-top: 20px;
@@ -201,7 +209,6 @@
     opacity: 0.4;
     cursor: default;
 }
-
 
 @media (max-width: 960px) {
     .mypage .mp-layout {

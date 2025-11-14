@@ -50,9 +50,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 editBtn.style.display = "none";
                 deleteBtn.style.display = "none";
             }
-
-            await loadViewCount();
-            await loadComments();
+            await Promise.all([loadViewCount(), loadComments()]);
         } catch {
             alert("게시글 정보를 불러오지 못했습니다.");
         }
