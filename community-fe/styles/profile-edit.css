@@ -5,7 +5,7 @@
 .profile-edit-wrapper {
     width: 100%;
     max-width: 900px;
-    margin: 140px auto;    /* 아래로 더 내려줌 */
+    margin: 140px auto;
     padding: 0 24px;
     display: flex;
     justify-content: center;
