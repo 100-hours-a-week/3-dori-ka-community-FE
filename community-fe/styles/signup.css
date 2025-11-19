@@ -40,10 +40,9 @@
 }
 
 .profile-preview {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    background: #d1d5db;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -51,6 +50,8 @@
     color: #555;
     cursor: pointer;
     margin-bottom: 4px;
+    background-size: contain;
+    background: #d1d5db no-repeat center;
 }
 
 .helper-text {
