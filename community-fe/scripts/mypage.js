@@ -1,4 +1,4 @@
-import { apiFetch } from "./api.js";
+import { apiFetch, buildImageUrl } from "./api.js";
 import { verifyToken } from "./auth.js";
 import "./common-header.js";
 
@@ -48,13 +48,14 @@ async function loadMyProfiles() {
         document.querySelector(".mp-name").textContent = user.nickname;
         document.querySelector(".mp-email").textContent = user.email;
         document.querySelector(".mp-joined").textContent = `가입일: ${user.createdDate}`;
-        document.querySelector(".mp-avatar").src =
-            user.profileImageUrl || "https://placehold.co/140";
+
+        const avatar = document.querySelector(".mp-avatar");
+        avatar.src = buildImageUrl(user.profileImage);
+
     } catch (error) {
         console.error("사용자 정보 불러오기 실패", error);
     }
 }
-
 async function loadMyPosts(page) {
     try {
         const response = await apiFetch(`/users/me/posts?page=${page}`);

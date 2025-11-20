@@ -1,4 +1,4 @@
-import { apiFetch } from "./api.js";
+import {apiFetch, profilePrefix} from "./api.js";
 import "./common-header.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -11,10 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const profilePreview = document.querySelector(".profile-preview");
     const submitBtn = document.querySelector(".signup-submit");
 
-    let uploadedProfileKey = null;
-
     profilePreview.addEventListener("click", () => {
-        profileInput.click(); // 클릭되도록 강제 트리거
+        profileInput.click();
     });
 
     profileInput.addEventListener("change", (e) => {
@@ -89,22 +87,50 @@ document.addEventListener("DOMContentLoaded", () => {
         submitBtn.disabled = !allValid;
     }
 
+    async function compressImage(file) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement("canvas");
+
+                const maxSize = 300; // 원하는 압축 크기
+                const scale = Math.min(maxSize / img.width, maxSize / img.height);
+
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+                canvas.toBlob(
+                    (blob) => resolve(blob),
+                    "image/jpeg",
+                    0.8 // 이미지 품질 80%
+                );
+            };
+            img.src = URL.createObjectURL(file);
+        });
+    }
+
     async function uploadProfileImage() {
         const file = profileInput.files[0];
         if (!file) return null;
 
-        // presigned URL 발급
-        const presigned = await apiFetch("/profile/image/presigned", {
+        const compressedBlob = await compressImage(file);
+
+        const presigned = await apiFetch("/presigned-url", {
             method: "POST",
-            body: JSON.stringify({ contentType: file.type }),
+            body: JSON.stringify({
+                prefix : profilePrefix,
+                contentType: "image/jpeg" }),
         });
 
         const { presignedUrl, key } = presigned.data;
 
         await fetch(presignedUrl, {
             method: "PUT",
-            headers: { "Content-Type": file.type },
-            body: file,
+            headers: { "Content-Type": "image/jpeg" },
+            body: compressedBlob,
         });
 
         return key;

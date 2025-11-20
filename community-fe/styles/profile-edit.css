@@ -146,15 +146,18 @@
     gap: 10px;
 }
 
-.btn-cancel {
+.btn-cancel, .btn-save {
     height: 42px;
     padding: 0 18px;
     border-radius: 10px;
-    border: 1px solid var(--border-black);
-    background: #fff;
     font-weight: 600;
     cursor: pointer;
     transition: all .15s ease;
+}
+
+.btn-cancel {
+    border: 1px solid var(--border-black);
+    background: #fff;
 }
 
 .btn-cancel:hover {
@@ -162,15 +165,9 @@
 }
 
 .btn-save {
-    height: 42px;
-    padding: 0 18px;
-    border-radius: 10px;
     background: #000;
     color: #fff;
     border: 1px solid #000;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all .15s ease;
 }
 
 .btn-save:hover {

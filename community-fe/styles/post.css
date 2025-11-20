@@ -106,7 +106,9 @@
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #d1d5db;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .post-footer {

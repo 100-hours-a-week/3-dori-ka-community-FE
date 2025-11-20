@@ -1,4 +1,4 @@
-import { apiFetch } from "./api.js";
+import { apiFetch, buildImageUrl } from "./api.js";
 import { verifyToken } from "./auth.js";
 import "./common-header.js";
 
@@ -15,6 +15,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     let page = 0;
     let lastPage = false;
 
+    const DEFAULT_AVATAR = "images/user.svg";
+
     function truncateText(text, maxLength) {
         if (!text) return "";
         return text.length > maxLength ? text.substring(0, maxLength) + "..." : text;
@@ -25,28 +27,33 @@ document.addEventListener("DOMContentLoaded", async () => {
         const writer = post.writer ?? "작성자";
         const preview = truncateText(post.content, 20);
 
+        const profileKey = post.profileImage || null;
+        const profileUrl = profileKey
+            ? buildImageUrl(profileKey)
+            : DEFAULT_AVATAR;
+
         const card = document.createElement("div");
         card.className = "post-card";
         card.innerHTML = `
-      <div class="post-header">
-        <h3>${post.title}</h3>
-        <div class="post-author-top">
-          <div class="author-profile"></div>
-          <span>${writer}</span>
-        </div>
-      </div>
+          <div class="post-header">
+            <h3>${post.title}</h3>
+            <div class="post-author-top">
+              <img class="author-profile" src="${profileUrl}" alt="${writer} 프로필" />
+              <span>${writer}</span>
+            </div>
+          </div>
 
-      <p class="post-preview">${preview}</p>
+          <p class="post-preview">${preview}</p>
 
-      <div class="post-footer">
-        <div class="post-meta">
-          <i class="bi bi-heart"></i> ${post.likeCount ?? 0} &nbsp;&nbsp;
-          <i class="bi bi-chat-left-dots"></i> ${post.commentCount ?? 0} &nbsp;&nbsp;
-          <i class="bi bi-eye"></i> ${post.viewCount ?? 0}
-        </div>
-        <span class="post-date">${createdDate}</span>
-      </div>
-    `;
+          <div class="post-footer">
+            <div class="post-meta">
+              <i class="bi bi-heart"></i> ${post.likeCount ?? 0} &nbsp;&nbsp;
+              <i class="bi bi-chat-left-dots"></i> ${post.commentCount ?? 0} &nbsp;&nbsp;
+              <i class="bi bi-eye"></i> ${post.viewCount ?? 0}
+            </div>
+            <span class="post-date">${createdDate}</span>
+          </div>
+        `;
 
         card.addEventListener("click", () => {
             location.href = `post-detail.html?id=${post.postId}`;
