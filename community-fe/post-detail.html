@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>게시글 상세 | 아무 말 대잔치</title>
+    <title>게시글 상세 | Dori's Community</title>
     <link rel="stylesheet" href="styles/styles.css" />
 </head>
 
@@ -25,6 +25,15 @@
         </div>
     </section>
 
+    <section id="imageSliderSection" class="image-slider-section" style="display:none;">
+        <button class="slider-btn left" id="sliderPrev">&lt;</button>
+
+        <div class="image-slider" id="imageSlider">
+        </div>
+
+        <button class="slider-btn right" id="sliderNext">&gt;</button>
+    </section>
+
     <section class="post-content">
         <p id="post-content" class="post-text">내용을 불러오는 중...</p>
     </section>
@@ -44,8 +53,7 @@
         <button id="comment-submit" class="comment-submit-btn">댓글 등록</button>
     </section>
 
-    <section id="comment-list" class="comment-list">
-    </section>
+    <section id="comment-list" class="comment-list"></section>
 
 </main>
 

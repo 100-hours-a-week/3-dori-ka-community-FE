@@ -1,8 +1,9 @@
-import { apiFetch } from "./api.js";
+import { apiFetch, buildImageUrl } from "./api.js";
 import { verifyToken } from "./auth.js";
 import "./common-header.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
+
     const validToken = await verifyToken();
     if (!validToken) {
         alert("로그인이 필요합니다.");
@@ -19,6 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
+    // 요소 가져오기
     const titleEl = document.getElementById("post-title");
     const authorEl = document.getElementById("post-author");
     const dateEl = document.getElementById("post-date");
@@ -26,6 +28,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     const likeCountEl = document.getElementById("likeCount");
     const viewCountEl = document.getElementById("viewCount");
     const commentCountEl = document.getElementById("commentCount");
+
+    const sliderSection = document.getElementById("imageSliderSection");
+    const sliderEl = document.getElementById("imageSlider");
+    const prevBtn = document.getElementById("sliderPrev");
+    const nextBtn = document.getElementById("sliderNext");
+
     const commentListEl = document.getElementById("comment-list");
     const commentInput = document.getElementById("comment-input");
     const commentSubmitBtn = document.getElementById("comment-submit");
@@ -34,31 +42,81 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const currentUserEmail = localStorage.getItem("email");
 
-    async function loadPostDetail() {
-        try {
-            const response = await apiFetch(`/posts/${postId}`, { method: "GET" });
-            const post = response.data;
+    let currentSlide = 0;
+    let images = [];
 
-            titleEl.textContent = post.title;
-            authorEl.textContent = post.writer ?? "작성자";
-            dateEl.textContent = new Date(post.createdDate).toLocaleString();
-            contentEl.textContent = post.content;
-            likeCountEl.textContent = post.likeCount ?? 0;
+    function renderSlider() {
+        sliderEl.innerHTML = "";
 
-            const isOwner = post.writerEmail === currentUserEmail;
-            if (!isOwner) {
-                editBtn.style.display = "none";
-                deleteBtn.style.display = "none";
-            }
-            await Promise.all([loadViewCount(), loadComments()]);
-        } catch {
-            alert("게시글 정보를 불러오지 못했습니다.");
+        if (images.length === 0) {
+            sliderSection.style.display = "none";
+            return;
         }
+
+        sliderSection.style.display = "block";
+
+        images.forEach((src, i) => {
+            const img = document.createElement("img");
+            img.src = src;
+            img.classList.add("slider-image");
+            if (i === 0) img.classList.add("active");
+            sliderEl.appendChild(img);
+        });
+    }
+
+    function showSlide(index) {
+        const imgTags = sliderEl.querySelectorAll("img");
+
+        imgTags.forEach(img => img.classList.remove("active"));
+        imgTags[index].classList.add("active");
+    }
+
+    prevBtn.addEventListener("click", () => {
+        if (images.length === 0) return;
+
+        currentSlide = (currentSlide - 1 + images.length) % images.length;
+        showSlide(currentSlide);
+    });
+
+    nextBtn.addEventListener("click", () => {
+        if (images.length === 0) return;
+
+        currentSlide = (currentSlide + 1) % images.length;
+        showSlide(currentSlide);
+    });
+
+    async function loadPostDetail() {
+        const res = await apiFetch(`/posts/${postId}`);
+        const post = res.data;
+
+        titleEl.textContent = post.title;
+        authorEl.textContent = post.writer;
+        dateEl.textContent = new Date(post.createdDate).toLocaleString();
+        contentEl.textContent = post.content;
+        likeCountEl.textContent = post.likeCount ?? 0;
+
+        const isOwner = post.writerEmail === currentUserEmail;
+        if (!isOwner) {
+            editBtn.style.display = "none";
+            deleteBtn.style.display = "none";
+        }
+
+        await Promise.all([loadImages(), loadViewCount(), loadViewCount()])
+        // await loadImages();
+        // await loadViewCount();
+        // await loadComments();
+    }
+
+    async function loadImages() {
+        const res = await apiFetch(`/posts/${postId}/images`);
+        images = res.data.map(i => buildImageUrl(i.postImageUrl));
+
+        renderSlider();
     }
 
     async function loadViewCount() {
         try {
-            const res = await apiFetch(`/posts/${postId}/viewcounts`, { method: "GET" });
+            const res = await apiFetch(`/posts/${postId}/viewcounts`);
             viewCountEl.textContent = res.data ?? 0;
         } catch {
             viewCountEl.textContent = "0";
@@ -67,159 +125,71 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     async function loadComments() {
         let page = 0;
-        let lastPage = false;
         let allComments = [];
-        commentListEl.innerHTML = "";
+        let last = false;
 
-        try {
-            while (!lastPage) {
-                const res = await apiFetch(`/posts/${postId}/comments?page=${page}&size=10`, {
-                    method: "GET",
-                });
+        while (!last) {
+            const res = await apiFetch(`/posts/${postId}/comments?page=${page}&size=10`);
+            const data = res.data;
 
-                const data = res.data;
-                const comments = data?.content ?? [];
-                allComments = allComments.concat(comments);
-
-                if (data.last) {
-                    lastPage = true;
-                    break;
-                }
-                page += 1;
-            }
-
-            commentCountEl.textContent = allComments.length;
-
-            if (allComments.length === 0) {
-                commentListEl.innerHTML = `<p style="color:#777;text-align:center;margin-top:10px;">등록된 댓글이 없습니다.</p>`;
-                return;
-            }
-
-            allComments.forEach((c) => {
-                const isCommentOwner = c.writerEmail === currentUserEmail;
-                const commentEl = document.createElement("div");
-                commentEl.className = "comment-item";
-                commentEl.innerHTML = `
-                    <div class="comment-top">
-                        <div>
-                            <strong class="comment-author">${c.writer ?? "익명"}</strong>
-                            <span class="comment-date">${new Date(c.createdDate).toLocaleString()}</span>
-                        </div>
-                        ${
-                    isCommentOwner
-                        ? `<div class="comment-actions">
-                                       <button class="comment-edit-btn" data-id="${c.commentId}">수정</button>
-                                       <button class="comment-delete-btn" data-id="${c.commentId}">삭제</button>
-                                   </div>`
-                        : ""
-                }
-                    </div>
-                    <p class="comment-text">${c.content}</p>
-                `;
-                commentListEl.appendChild(commentEl);
-            });
-        } catch (err) {
-            console.error("댓글 불러오기 실패:", err);
+            allComments = [...allComments, ...data.content];
+            last = data.last;
+            page++;
         }
+
+        commentCountEl.textContent = allComments.length;
+
+        commentListEl.innerHTML = allComments.length === 0
+            ? `<p style="text-align:center;color:#777;margin-top:10px;">등록된 댓글이 없습니다.</p>`
+            : allComments.map(c => renderComment(c)).join("");
     }
 
-    commentListEl.addEventListener("click", async (e) => {
-        const editBtn = e.target.closest(".comment-edit-btn");
-        const deleteBtn = e.target.closest(".comment-delete-btn");
+    function renderComment(c) {
+        const isOwner = c.writerEmail === currentUserEmail;
+        return `
+        <div class="comment-item">
+            <div class="comment-top">
+                <div>
+                    <span class="comment-author">${c.writer}</span>
+                    <span class="comment-date">${new Date(c.createdDate).toLocaleString()}</span>
+                </div>
 
-        if (editBtn) {
-            const commentId = editBtn.dataset.id;
-            const commentEl = editBtn.closest(".comment-item");
-            const textEl = commentEl.querySelector(".comment-text");
-
-            if (commentEl.querySelector(".edit-area")) return;
-
-            const originalContent = textEl.textContent;
-            const textarea = document.createElement("textarea");
-            textarea.className = "edit-area";
-            textarea.value = originalContent;
-            textarea.style.width = "100%";
-            textarea.style.height = "60px";
-            textarea.style.marginTop = "6px";
-
-            const saveBtn = document.createElement("button");
-            saveBtn.textContent = "저장";
-            saveBtn.className = "save-edit-btn";
-            saveBtn.style.marginRight = "8px";
-
-            const cancelBtn = document.createElement("button");
-            cancelBtn.textContent = "취소";
-            cancelBtn.className = "cancel-edit-btn";
-
-            const actionArea = document.createElement("div");
-            actionArea.className = "edit-action-area";
-            actionArea.style.marginTop = "8px";
-            actionArea.appendChild(saveBtn);
-            actionArea.appendChild(cancelBtn);
-
-            textEl.replaceWith(textarea);
-            textarea.after(actionArea);
-
-            saveBtn.addEventListener("click", async () => {
-                const newContent = textarea.value.trim();
-                if (!newContent) return alert("내용을 입력하세요.");
-                try {
-                    await apiFetch(`/posts/${postId}/comments/${commentId}`, {
-                        method: "PATCH",
-                        body: JSON.stringify({ content: newContent }),
-                    });
-                    await loadComments();
-                } catch {
-                    alert("댓글 수정 중 오류가 발생했습니다.");
-                }
-            });
-
-            cancelBtn.addEventListener("click", () => {
-                textarea.replaceWith(textEl);
-                actionArea.remove();
-            });
+                ${
+            isOwner
+                ? `<div class="comment-actions">
+                               <button class="comment-edit-btn" data-id="${c.commentId}">수정</button>
+                               <button class="comment-delete-btn" data-id="${c.commentId}">삭제</button>
+                           </div>`
+                : ""
         }
-
-        if (deleteBtn) {
-            const commentId = deleteBtn.dataset.id;
-            if (!confirm("정말 댓글을 삭제하시겠습니까?")) return;
-            try {
-                await apiFetch(`/posts/${postId}/comments/${commentId}`, {
-                    method: "DELETE",
-                });
-                await loadComments();
-            } catch {
-                alert("댓글 삭제 중 오류가 발생했습니다.");
-            }
-        }
-    });
-
-    editBtn.addEventListener("click", () => (location.href = `post-edit.html?id=${postId}`));
-
-    deleteBtn.addEventListener("click", async () => {
-        if (!confirm("정말로 게시글을 삭제하시겠습니까?")) return;
-        try {
-            await apiFetch(`/posts/${postId}`, { method: "DELETE" });
-            alert("게시글이 삭제되었습니다.");
-            location.href = "post.html";
-        } catch {
-            alert("게시글 삭제 중 오류가 발생했습니다.");
-        }
-    });
+            </div>
+            <p class="comment-text">${c.content}</p>
+        </div>`;
+    }
 
     commentSubmitBtn.addEventListener("click", async () => {
         const content = commentInput.value.trim();
         if (!content) return alert("댓글 내용을 입력해주세요.");
-        try {
-            await apiFetch(`/posts/${postId}/comments`, {
-                method: "POST",
-                body: JSON.stringify({ content }),
-            });
-            commentInput.value = "";
-            await loadComments();
-        } catch {
-            alert("댓글 등록 실패");
-        }
+
+        await apiFetch(`/posts/${postId}/comments`, {
+            method: "POST",
+            body: JSON.stringify({ content }),
+        });
+
+        commentInput.value = "";
+        await loadComments();
+    });
+
+    editBtn.addEventListener("click", () => {
+        location.href = `post-edit.html?id=${postId}`;
+    });
+
+    deleteBtn.addEventListener("click", async () => {
+        if (!confirm("정말 삭제하시겠습니까?")) return;
+
+        await apiFetch(`/posts/${postId}`, { method: "DELETE" });
+        alert("게시글이 삭제되었습니다.");
+        location.href = "post.html";
     });
 
     await loadPostDetail();

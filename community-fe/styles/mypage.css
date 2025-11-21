@@ -210,6 +210,15 @@
     cursor: default;
 }
 
+.mp-page-select {
+    margin-left: 12px;
+    padding: 6px 10px;
+    border: 1px solid var(--border-black);
+    border-radius: 6px;
+    background: #fff;
+    cursor: pointer;
+}
+
 @media (max-width: 960px) {
     .mypage .mp-layout {
         grid-template-columns: 1fr;

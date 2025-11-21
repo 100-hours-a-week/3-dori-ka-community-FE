@@ -11,9 +11,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     await Promise.all([loadMyProfiles(), loadMyPosts(0), loadMyComments(0)])
-    // loadMyProfiles();
-    // loadMyPosts(0);
-    // loadMyComments(0);
 
     const deleteBtn = document.querySelector("#delete-account-btn")
     if (!deleteBtn) return;
@@ -171,4 +168,22 @@ function renderPagination(containerSelector, totalPages, currentPage, callback) 
         callback(target);
     });
     container.appendChild(nextGroupBtn);
+
+    const select = document.createElement("select");
+    select.className = "mp-page-select";
+
+    for (let i = 0; i < totalPages; i++) {
+        const option = document.createElement("option");
+        option.value = i;
+        option.textContent = `${i + 1}`;
+        if (i === currentPage) option.selected = true;
+        select.appendChild(option);
+    }
+
+    select.addEventListener("change", (e) => {
+        const targetPage = Number(e.target.value);
+        callback(targetPage);
+    });
+
+    container.appendChild(select);
 }
