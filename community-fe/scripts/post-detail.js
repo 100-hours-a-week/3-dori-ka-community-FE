@@ -20,7 +20,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         return;
     }
 
-    // 요소 가져오기
     const titleEl = document.getElementById("post-title");
     const authorEl = document.getElementById("post-author");
     const dateEl = document.getElementById("post-date");
@@ -101,15 +100,28 @@ document.addEventListener("DOMContentLoaded", async () => {
             deleteBtn.style.display = "none";
         }
 
-        await Promise.all([loadImages(), loadViewCount(), loadViewCount()])
+        await Promise.all([loadImages(), loadViewCount(), loadComments()])
         // await loadImages();
         // await loadViewCount();
         // await loadComments();
     }
 
     async function loadImages() {
+        const apiStart = performance.now();
         const res = await apiFetch(`/posts/${postId}/images`);
+        const apiEnd = performance.now();
+
+        console.log(`이미지 리스트 API 응답 시간: ${(apiEnd - apiStart).toFixed(2)} ms`);
+
         images = res.data.map(i => buildImageUrl(i.postImageUrl));
+
+        const loadTimes = await Promise.all(
+            images.map(url => measureImageLoadTime(url))
+        );
+
+        loadTimes.forEach((time, idx) => {
+            console.log(`이미지 ${idx + 1} 로딩 시간: ${time.toFixed(2)} ms (${images[idx]})`);
+        });
 
         renderSlider();
     }
@@ -192,5 +204,74 @@ document.addEventListener("DOMContentLoaded", async () => {
         location.href = "post.html";
     });
 
+    commentListEl.addEventListener("click", async (e) => {
+        const editBtn = e.target.closest(".comment-edit-btn");
+        const deleteBtn = e.target.closest(".comment-delete-btn");
+
+        if (deleteBtn) {
+            const id = deleteBtn.dataset.id;
+            if (!confirm("삭제하시겠습니까?")) return;
+
+            await apiFetch(`/posts/${postId}/comments/${id}`, {
+                method: "DELETE"
+            });
+
+            await loadComments();
+            return;
+        }
+
+        if (editBtn) {
+            const id = editBtn.dataset.id;
+            const commentItem = editBtn.closest(".comment-item");
+            const textEl = commentItem.querySelector(".comment-text");
+            const original = textEl.textContent.trim();
+
+            textEl.innerHTML = `
+            <textarea class="comment-edit-area">${original}</textarea>
+            <button class="comment-save-btn" data-id="${id}">저장</button>
+            <button class="comment-cancel-btn">취소</button>
+        `;
+            return;
+        }
+
+        const saveBtn = e.target.closest(".comment-save-btn");
+        if (saveBtn) {
+            const id = saveBtn.dataset.id;
+            const commentItem = saveBtn.closest(".comment-item");
+            const textarea = commentItem.querySelector(".comment-edit-area");
+
+            await apiFetch(`/posts/${postId}/comments/${id}`, {
+                method: "PATCH",
+                body: JSON.stringify({
+                    content: textarea.value.trim(),
+                }),
+            });
+
+            await loadComments();
+            return;
+        }
+
+        if (e.target.closest(".comment-cancel-btn")) {
+            await loadComments();
+            return;
+        }
+    });
     await loadPostDetail();
 });
+
+function measureImageLoadTime(url) {
+    return new Promise(resolve => {
+        const img = new Image();
+        const start = performance.now();
+
+        img.onload = () => {
+            const end = performance.now();
+            resolve(end - start);
+        };
+
+        img.onerror = () => resolve(-1);
+
+        img.src = url;
+    });
+}
+

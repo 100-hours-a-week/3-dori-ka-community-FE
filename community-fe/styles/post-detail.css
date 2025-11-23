@@ -273,3 +273,14 @@
 .slider-btn:hover {
     background: rgba(0,0,0,0.6);
 }
+
+.comment-edit-area {
+    width: 100%;
+    min-height: 80px; /* 원하는 만큼 늘리기 */
+    font-size: 16px;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    resize: vertical; /* 사용자가 크기 조절 가능 */
+    box-sizing: border-box;
+}

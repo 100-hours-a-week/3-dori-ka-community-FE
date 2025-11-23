@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         try {
-            await apiFetch("/users/my/pwd", {
+            await apiFetch("/users/me/pwd", {
                 method: "PATCH",
                 body: JSON.stringify({ password, passwordCheck }),
             });
