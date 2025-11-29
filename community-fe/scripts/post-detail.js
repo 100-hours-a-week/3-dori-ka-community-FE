@@ -101,9 +101,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
         await Promise.all([loadImages(), loadViewCount(), loadComments()])
-        // await loadImages();
-        // await loadViewCount();
-        // await loadComments();
     }
 
     async function loadImages() {
@@ -167,8 +164,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                 </div>
 
                 ${
-            isOwner
-                ? `<div class="comment-actions">
+            isOwner ? 
+                `<div class="comment-actions">
                                <button class="comment-edit-btn" data-id="${c.commentId}">수정</button>
                                <button class="comment-delete-btn" data-id="${c.commentId}">삭제</button>
                            </div>`

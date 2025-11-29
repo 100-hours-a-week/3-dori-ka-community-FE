@@ -1,4 +1,5 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import {logout} from "../../utils/auth.js";
 import "./Header.css";
 import { useCallback } from "react";
 
@@ -11,9 +12,8 @@ export default function Header() {
         [location.pathname]
     );
 
-    const logout = () => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("email");
+    const handleLogout = async () => {
+        await logout();
         navigate("/login");
     };
 
@@ -36,7 +36,7 @@ export default function Header() {
                     마이페이지
                 </Link>
 
-                <button className="logout-btn" onClick={logout}>
+                <button className="logout-btn" onClick={handleLogout}>
                     로그아웃
                 </button>
             </nav>

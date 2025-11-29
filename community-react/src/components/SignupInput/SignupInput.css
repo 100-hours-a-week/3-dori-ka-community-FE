@@ -1,0 +1,12 @@
+.helper-text {
+    font-size: 12px;
+    margin-top: 2px;
+    color: rgba(0, 0, 0, 0.5);
+    text-align: left;
+    width: 100%;
+    padding-left: 2px;
+}
+
+.helper-text.error {
+    color: rgb(255, 0, 0);
+}

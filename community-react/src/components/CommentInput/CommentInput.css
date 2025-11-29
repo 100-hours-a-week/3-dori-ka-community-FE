@@ -1,0 +1,52 @@
+.comment-section {
+    width: 595px;
+    min-height: 205px;
+    background: #fff;
+    border-radius: 8px;
+    margin: 0 auto 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 55px;
+}
+
+.comment-box {
+    width: 544px;
+    height: 94px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.comment-box textarea {
+    flex: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 15px;
+    color: #111;
+    font-family: "Noto Sans KR", sans-serif;
+    padding: 4px;
+}
+
+.comment-submit-btn {
+    width: 138px;
+    height: 39px;
+    background: var(--primary);
+    border: none;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 6px;
+    position: absolute;
+    bottom: 8px;
+    right: 26px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.comment-submit-btn:hover {
+    opacity: 0.9;
+}

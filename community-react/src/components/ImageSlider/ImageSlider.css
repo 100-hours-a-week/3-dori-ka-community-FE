@@ -1,0 +1,51 @@
+.image-slider-section {
+    width: 600px;
+    margin: 20px auto;
+    position: relative;
+}
+
+.image-slider {
+    width: 100%;
+    max-height: 600px;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+.image-slider img {
+    width: 100%;
+    display: none;
+    height: auto;
+    object-fit: contain;
+    background-color: #000;
+}
+
+.image-slider img.active {
+    display: block;
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 22px;
+    z-index: 10;
+}
+
+.slider-btn.left {
+    left: -50px;
+}
+
+.slider-btn.right {
+    right: -50px;
+}
+
+.slider-btn:hover {
+    background: rgba(0, 0, 0, 0.6);
+}

@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axiosClient from "../../api/axiosClient";
-import "../../styles/base.css";
-import "./LoginPage.css";
+import { verifyToken } from "../../utils/auth";
+import AuthForm from "../../components/AuthForm/AuthForm";
+import "./LoginPage.css"
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -10,73 +11,46 @@ export default function LoginPage() {
     const [password, setPassword] = useState("");
 
     useEffect(() => {
-        document.body.classList.add("login-page");
-        return () => {
-            document.body.classList.remove("login-page");
-        };
-    }, []);
-
-    useEffect(() => {
-        const token = localStorage.getItem("accessToken");
-        if (token) navigate("/posts");
+        async function check() {
+            const valid = await verifyToken();
+            if (valid) navigate("/posts");
+        }
+        check();
     }, [navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        if (!email || !password) return alert("이메일과 비밀번호를 입력해주세요");
-
         try {
             const response = await axiosClient.post("/auth", { email, password });
             const data = response.data.data;
 
-            localStorage.setItem("accessToken", data.accessToken);
+            localStorage.setItem("token", data.accessToken);
             localStorage.setItem("email", data.email);
 
             alert("로그인 성공!");
             navigate("/posts");
-        } catch (err) {
-            console.error(err);
+        } catch {
             alert("이메일 또는 비밀번호가 올바르지 않습니다.");
         }
     };
 
     return (
-        <main className="login-section">
-            <h2 className="login-title">로그인</h2>
-
-            <form className="login-box" onSubmit={handleSubmit}>
-                <label htmlFor="email">이메일</label>
-                <input
-                    id="email"
-                    type="email"
-                    placeholder="이메일을 입력하세요"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-
-                <label htmlFor="password">비밀번호</label>
-                <input
-                    id="password"
-                    type="password"
-                    placeholder="비밀번호를 입력하세요"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-
-                <button type="submit" className="login-btn">
-                    로그인
+        <AuthForm
+            title="로그인"
+            submitText="로그인"
+            onSubmit={handleSubmit}
+            fields={[
+                { id: "email", label: "이메일", type: "email", value: email, onChange: setEmail, helpMessage: "이메일을 입력하세요" },
+                { id: "password", label: "비밀번호", type: "password", value: password, onChange: setPassword, helpMessage: "비밀번호를 입력하세요" },
+            ]}
+            extraButton={
+                <button
+                    className="signup-btn"
+                    onClick={() => navigate("/register")}
+                >
+                    회원가입
                 </button>
-            </form>
-
-            <button
-                className="signup-btn"
-                onClick={() => navigate("/register")}
-            >
-                회원가입
-            </button>
-        </main>
+            }
+        />
     );
 }

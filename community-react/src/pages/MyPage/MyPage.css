@@ -1,0 +1,30 @@
+.mypage .mp-container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 80px auto 80px;
+    padding: 0 40px;
+}
+
+.mypage .mp-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-areas:
+        "profile posts"
+        "profile comments";
+    gap: 40px;
+    width: 100%;
+    align-items: start;
+}
+
+@media (max-width: 960px) {
+    .mypage .mp-layout {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "profile"
+          "posts"
+          "comments";
+    }
+}
+
+.mp-post-section { grid-area: posts; }
+.mp-comment-section { grid-area: comments; }

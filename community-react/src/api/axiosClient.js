@@ -2,9 +2,26 @@ import axios from "axios";
 
 const axiosClient = axios.create({
     baseURL: "http://localhost:8080",
+    withCredentials: true,
     headers: {
         "Content-Type": "application/json",
-    },
+    }
 });
+
+axiosClient.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+});
+
+axiosClient.interceptors.response.use(
+    (res) => res,
+    (err) => {
+        console.error("API ERROR:", err);
+        return Promise.reject(err);
+    }
+);
 
 export default axiosClient;

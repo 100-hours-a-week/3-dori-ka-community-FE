@@ -1,0 +1,125 @@
+.post-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 32px;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.post-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.post-text {
+    white-space: normal;
+    word-break: break-word;
+}
+
+.post-meta-top {
+    font-size: 14px;
+    color: #555;
+    display: flex;
+    gap: 8px;
+}
+
+.post-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.post-actions button {
+    width: 50px;
+    height: 27px;
+    border: 1px solid var(--border-black);
+    background: #fff;
+    font-size: 14px;
+    color: var(--text);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-weight: 500;
+}
+
+.post-actions button:hover {
+    background: var(--primary);
+    color: #fff;
+    border-color: var(--primary);
+    transform: translateY(-1px);
+}
+
+.post-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.post-text {
+    width: 600px;
+    min-height: 231px;
+    border-radius: 8px;
+    padding: 16px;
+    font-size: 20px;
+    line-height: 1.6;
+    margin-top: 12px;
+}
+
+.post-stats {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin: 16px 0 24px;
+}
+
+.stat-box {
+    width: 123px;
+    height: 71px;
+    border-radius: 12px;
+    background: #e5e7eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.stat-box strong {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.stat-box span {
+    font-size: 13px;
+    color: #333;
+}
+
+
+.like-box i {
+    font-size: 20px;
+    line-height: 20px;
+    display: block;
+    margin-bottom: 2px;
+    transition: transform 0.15s ease;
+}
+
+.like-box:hover i {
+    transform: scale(1.15);
+}
+
+.like-box strong {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.divider-line {
+    width: 595px;
+    height: 1px;
+    background: #ccc;
+    margin: 0 auto 24px;
+}
