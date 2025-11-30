@@ -11,14 +11,6 @@ export default function MyPage() {
     const navigate = useNavigate();
     const [profile, setProfile] = useState(null);
 
-    useEffect(() => {
-        async function load() {
-            const valid = await verifyToken();
-            if (!valid) return navigate("/login");
-            await loadProfile();
-        }
-        load();
-    }, []);
 
     async function loadProfile() {
         const response = await axiosClient.get("/users/me");
@@ -27,6 +19,15 @@ export default function MyPage() {
             avatar: buildImageUrl(response.data.data.profileImage),
         });
     }
+
+    useEffect(() => {
+        async function load() {
+            const valid = await verifyToken();
+            if (!valid) return navigate("/login");
+            await loadProfile();
+        }
+        load();
+    }, []);
 
     const fetchMyPosts = async (page) => {
         const response = await axiosClient.get(`/users/me/posts?page=${page}`);
