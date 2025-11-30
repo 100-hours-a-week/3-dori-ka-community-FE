@@ -190,7 +190,7 @@ export default function ProfileEdit() {
                     </div>
 
                     <div className="edit-field">
-                        <label>닉네임*</label>
+                        <label>*닉네임</label>
                         <input
                             id="nickname"
                             value={nickname}

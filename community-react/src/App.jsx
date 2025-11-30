@@ -1,6 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Header from "./components/Header/Header";
-import "./styles/layout.css";
 import LoginPage from "./pages/Login/LoginPage.jsx";
 import PostListPage from "./pages/PostList/PostListPage.jsx";
 import MyPage from "./pages/MyPage/MyPage.jsx";
@@ -10,6 +9,7 @@ import PasswordEdit from "./pages/PasswordEdit/PasswordEdit.jsx";
 import PostEditPage from "./pages/PostEdit/PostEditPage.jsx";
 import ProfileEditPage from "./pages/ProfileEdit/ProfileEdit.jsx";
 import SignupPage from "./pages/SignUp/SignupPage.jsx";
+import "./styles/layout.css";
 
 export default function App() {
     return (

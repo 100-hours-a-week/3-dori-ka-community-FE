@@ -109,7 +109,7 @@ export default function PostDetailPage() {
             await loadPostDetail();
         }
         fetchPost();
-    }, []);
+    }, [postId]);
 
 
     async function deletePost() {

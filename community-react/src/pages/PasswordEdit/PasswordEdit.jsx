@@ -27,7 +27,7 @@ export default function PasswordEdit() {
             await axiosClient.post("/users/me/pwd", { password, passwordCheck });
 
             alert("비밀번호 변경 성공!");
-            navigate("/myPage");
+            navigate("/mypage");
         } catch {
             alert("비밀번호가 일치하지 않습니다.");
         }

@@ -163,7 +163,7 @@ export default function SignupPage() {
                         </div>
                     </div>
 
-                    <p className="helper-text">*프로필 사진을 추가해주세요.</p>
+                    <p className="helper-text">프로필 사진을 추가해주세요.</p>
                 </div>
 
                 <SignupInput
