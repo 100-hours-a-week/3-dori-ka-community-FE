@@ -24,7 +24,7 @@ export default function PasswordEdit() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axiosClient.post("/users/me/pwd", { password, passwordCheck });
+            await axiosClient.patch("/users/me/pwd", { password, passwordCheck });
 
             alert("비밀번호 변경 성공!");
             navigate("/mypage");
