@@ -3,16 +3,34 @@
 **회원가입/로그인**, **게시글 CRUD**, **댓글 CRUD** 등을 포함한 풀스택 개인 프로젝트입니다. Spring Boot + Vanilla JS Or React 기반의 커뮤니티 웹 서비스를 구현했습니다.
 
 ---
+## 📚 기술 스택
 
-✨ 주요 기능 요약
+### Vanilla Js Version
 
-🔐 인증 처리
+- HTML/CSS/JS
+
+### React Version
+
+- React
+- React Router
+- Axios
+- Vite
+
+### Backend
+
+- Java 21
+- Spring Boot 3.5.6
+- github: https://github.com/100-hours-a-week/3-dori-ka-community-BE
+
+## ✨ 주요 기능 요약
+
+### 🔐 인증 처리
 - 로그인 상태 검증
 - JWT를 사용한 사용자 검증 및 로그인 처리
 
 ---
 
-📝 게시글 기능
+### 📝 게시글 기능
 - 게시글 목록 조회
 - 게시글 상세 조회
 - 게시글 생성 / 수정 / 삭제
@@ -20,7 +38,7 @@
 
 ---
 
-💬 댓글 기능
+### 💬 댓글 기능
 - 댓글 작성 / 수정 / 삭제
 - 댓글 페이징
 
